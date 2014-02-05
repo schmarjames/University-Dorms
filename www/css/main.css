@@ -1,0 +1,101 @@
+
+#student_form_wrapper .second_sec {
+	display: none;
+	width: 640px;
+	height: 120px;
+	padding: 0;
+	margin: 0;
+}
+
+#student_form_wrapper .dorm_select {
+	background: red;
+	width: 80px;
+	height: 80px;
+	float: left;
+	margin: 0 3px;
+	list-style: none;
+}
+
+#student_form_wrapper .dorm_select.active {
+	border: 1px solid #000;
+	background: transparent !important;
+}
+
+#student_form_wrapper .dorm_select.active.select {
+	background: #ccc;
+}
+
+/********
+	Unit Styles
+********/
+
+#avialable_units ul {
+	padding: 0;
+	margin: 0;
+	display: block;
+	float: left;
+}
+
+#avialable_units ul li {
+	list-style: none;
+	float: left;
+	width: 135px;
+}
+
+.unit {
+	height: 100px;
+	width: 125px;
+	float: left;
+	border: 1px solid #000;
+}
+
+.unit.not_aval {
+	background: red;
+}
+
+.unit .rooms_wrapper {
+	width: 100%;
+	height: 75px;
+	border: 1px solid #000;
+	clear: both;
+}
+
+.unit .rooms_wrapper .rooms_left {
+	height: 100%;
+	width: 38px;
+	float: left;
+}
+
+.unit .rooms_wrapper .rooms_right {
+	height: 100%;
+	width: 38px;
+	float: right;
+}
+
+.unit .rooms_wrapper .rooms_left .room,
+.unit .rooms_wrapper .rooms_right .room {
+	width: 100%;
+	height: 36px;
+	border: 1px solid #000;
+}
+
+.unit .rooms_wrapper .room.room_not_aval {
+	background: red;
+}
+
+.unit .rooms_wrapper .room.selected {
+	background: #ccc;
+}
+
+.unit .unit_access {
+	width: 100%;
+	height: 25px;
+}
+
+.unit .unit_access .common,
+.unit .unit_access .kitchen {
+	width: 48%;
+	height: 92%;
+	float: left;
+	border: 1px solid #000;
+}
