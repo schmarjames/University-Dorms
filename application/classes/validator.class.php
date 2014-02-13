@@ -3,13 +3,14 @@
 class Validator {
  
   /**
-   * Regular expression used to match email addresses.
-   * Stored as string using Perl-compatible (PCRE) syntax.
-   * Final i represents a case-insensitive pattern
    * 
-   * @link http://www.regular-expressions.info  
+   * Checks the form inputs to check to see if they
+   * match the rules 
+   * 
+   * @package    University Dorms
+   * @subpackage Validator
+   * @author     Schmar James <loyd.slj@gmail.com>  
    */
-  const REGEX_EMAIL       = '/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i';
   const REGEX_ALPHA       = '/^[A-Z.]+$/i';
   const REGEX_ALPHA_NUM   = '/^[A-Z0-9._+-]+$/i';
  
@@ -19,7 +20,6 @@ class Validator {
   const ERROR_REQUIRED    = 'This field is required. Please enter a value.';
   const ERROR_ALPHA       = 'This field should contain only alphabetical characters';
   const ERROR_ALPHA_NUM   = 'This field should contain both letters and numbers';
-  const ERROR_EMAIL       = 'Please input a valid email address.';
   const ERROR_MIN_LENGTH  = 'This field does not meet the minimum length.';
   const ERROR_MAX_LENGTH  = 'This field exceeds the maximum length.';
   const ERROR_NUMERIC     = 'This field should hold a numeric value.';
@@ -45,31 +45,31 @@ class Validator {
    */
   private $errors = array();
 	
-	/**
- * Validator Constructor
- * 
- * @param array $form_data data submitted via form
- * @param array $rules validation rules configured by user
- */
-function __construct($form_data, $rules_data) {
-    $this->fields = $this->sanitize($form_data);
-    $this->rules = $rules_data;
-}
+  /**
+   * Validator Constructor
+   * 
+   * @param array $form_data data submitted via form
+   * @param array $rules validation rules configured by user
+   */
+  function __construct($form_data, $rules_data) {
+      $this->fields = $this->sanitize($form_data);
+      $this->rules = $rules_data;
+  }
  
-/**
- * Function calls filter_var_array() to filter form data
- * 
- * @param type $sanitized_data  data to be sanitized
- * @return mixed    sanitized form data
- */
-private function sanitize($form_data) {
+  /**
+   * Function calls filter_var_array() to filter form data
+   * 
+   * @param type $sanitized_data  data to be sanitized
+   * @return mixed    sanitized form data
+   */
+  private function sanitize($form_data) {
     $sanitized_data = filter_var_array($form_data, FILTER_SANITIZE_STRING);
  
     // Return the sanitized datas
     return $sanitized_data;
-}
+  }
 		
-/**
+  /**
    * Function handles form data validation
    * 
    * @return array
@@ -122,7 +122,7 @@ private function sanitize($form_data) {
       }
   }
 	
-  /**
+    /**
      * Function checks if string is an email address.
      * 
      * @param string $string string to be checked
@@ -191,6 +191,7 @@ private function sanitize($form_data) {
             $this->errors[$field][] = self::ERROR_MIN_LENGTH;
         }
     }
+    
     private function max_length($field, $value, $max_length) {
         $length = strlen($value);
  
@@ -219,7 +220,7 @@ private function sanitize($form_data) {
 	}
 
     	
-	 /**
+	/**
      * Function returns form data
      * 
      * @return array form fields

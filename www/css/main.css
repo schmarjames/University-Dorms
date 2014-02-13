@@ -1,24 +1,431 @@
+@import url(http://fonts.googleapis.com/css?family=Balthazar|Glegoo);
 
-#student_form_wrapper .second_sec {
-	display: none;
-	width: 640px;
-	height: 120px;
+/*************************************************************************
+	General Styles
+*************************************************************************/
+
+body {
 	padding: 0;
 	margin: 0;
+	background: url('../images/Wellesley_College_Tower_Court.jpg') #000 no-repeat 0px -83px;
+	background-size: cover;
 }
 
-#student_form_wrapper .dorm_select {
-	background: red;
-	width: 80px;
-	height: 80px;
+button,
+input[type="submit"] {
+	width: 100px;
+	height: 30px;
+	color: #ffffff;
+	display: block;
+	margin: 0 2px;
 	float: left;
-	margin: 0 3px;
+	line-height: 12px;
+	text-align: center;
+	font-family: 'Glegoo', serif;
+	font-size: 12px;
+	text-decoration: none;
+	background: #000;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: none;
+	cursor: pointer;
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+	opacity: 0.3;
+}
+
+header {
+	position: relative;
+	width: 100%;
+	height: 200px;
+}
+
+h1.welcome {
+	font-family: 'Balthazar', serif;
+	font-size: 34px;
+	color: #000;
+	margin: 10px auto;
+	width: 522px;
+	text-align: center;
+}
+
+p.message {
+	font-family: 'Balthazar', serif;
+	font-size: 23px;
+	color: #000;
+	margin: 5px auto;
+	text-align: left;
+	width: 460px;
+}
+
+#nav {
+	position: absolute;
+	top: 40px;
+	left: 46%;
+	width: 330px;
+}
+
+#nav a {
+	width: 150px;
+	height: 40px;
+	color: #ffffff;
+	display: block;
+	margin: 0 2px;
+	float: left;
+	line-height: 34px;
+	text-align: center;
+	font-family: 'Glegoo', serif;
+	font-size: 14px;
+	text-decoration: none;
+	background: #000;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	cursor: pointer;
+}
+
+#main_wrapper {
+	width: 700px;
+	min-height: 240px;
+	margin: 0 auto;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	background: rgba(239, 239, 239, 0.8);
+	border: 1px solid #ccc;
+	box-shadow: 0px 0px 0px 0px #666;
+}
+
+/*************************************************************************
+	Percentage Styles
+*************************************************************************/
+#dormitory_percent {
+	width: 100%;
+	height: 220px;
+	margin: 20px 0;
+	float: left;
+}
+
+#dormitory_percent h3 {
+	text-align: center;
+	font-family: 'Balthazar', serif;
+	font-size: 18px;
+	
+}
+
+#dormitory_percent .dg_percent_list {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#dormitory_percent .dg_percent_list .dg_percent {
+	width: 100px;
+	height: 154px;
+	margin: 5px 8px;
+	padding: 0;
+	float: left;
 	list-style: none;
 }
 
+#dormitory_percent .dg_percent_list .dg_percent .progress_dorm {
+	font-family: 'Glegoo', serif;
+	font-size: 14px;
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+
+#dormitory_percent .dg_percent_list .progress_wrap {
+	width: 100%;
+	height: 100px;
+	padding: 24px 0 0;
+	float: left;
+	list-style: none;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background: #2F4F4F;
+	overflow: hidden;
+	position: relative;
+}
+
+#dormitory_percent .dg_percent_list .dg_percent .progress-bar {
+	width: 100%;
+	height: 0;
+	padding: 0 0 24px;
+	font-family: 'Glegoo', serif;
+	font-size: 20px;
+	background: red;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+}
+
+#dormitory_percent .dg_percent_list .dg_percent .percent {
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	text-align: center;
+	display: block;
+	position: absolute;
+	z-index: 1000;
+}
+
+#dormitory_percent .dg_percent_list .dg_percent .now {
+	width: 100%;
+	height: 100%;
+}
+
+/*************************************************************************
+	Diagram Styles
+*************************************************************************/
+
+#dormitory_graph {
+	width: 700px;
+	min-height: 20px;
+	position: relative;
+	display: none;
+}
+
+#dormitory_graph h3 {
+	font-family: 'Balthazar', serif;
+	font-size: 25px;
+	color: #000;
+	text-align: center;
+}
+
+/********
+	Diagram Dorm List Styles
+********/
+
+#dormitory_graph ul.dg_dorm_list {
+	margin: 20px 0;
+	padding: 0 20px;
+	width: 94%;
+	height: 87px;
+}
+
+#dormitory_graph ul.dg_dorm_list li.dg_dorm_select {
+	width: 80px;
+	height: 40px;
+	margin: 3px 14px;
+	float:left;
+	color: #ffffff;
+	list-style: none;
+	background: #2F4F4F;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	font-size: 30px;
+	list-style: none;
+	padding: 20px 0;
+	text-align: center;
+	cursor: pointer;
+}
+
+/********
+	Diagram Unit List Styles
+********/
+
+#dormitory_graph .dg_unit_list {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 540px;
+}
+
+#dormitory_graph .dg_unit_list li {
+	width: 150px;
+	height: 172px;
+	float: left;
+	margin: 3px 12px;
+	list-style: none;
+}
+
+/********
+	Diagram - Student Modal
+********/
+
+#modal_overlay {
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 9999;	
+	display: none;
+}
+
+#student_modal {
+	background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 6px 0 #000;
+    left: 7%;
+    min-height: 200px;
+    position: absolute;
+    top: 10%;
+    width: 1083px;
+    z-index: 1000;
+}
+
+#student_modal .close {
+	background: #cecece;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+    font-size: 24px;
+    height: 30px;
+    line-height: 28px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 30px;
+    cursor: pointer;
+}
+
+#student_modal table {
+	height: 100%;
+	position: absolute;
+	top: 30px;
+	width: 100%;
+	text-align: left;
+}
+
+#student_modal table thead th {
+	border-bottom: 1px solid #666666;
+	font-family: 'Glegoo', serif;
+	font-size: 12px;
+}
+
+#student_modal table tbody tr td {
+	padding: 4px 6px 4px 0;
+	font-family: Arial;
+	font-size: 12px;
+}
+
+#student_modal a {
+	width: 50px;
+	height: 22px;
+	color: #ffffff;
+	display: block;
+	margin: 0 2px;
+	float: left;
+	line-height: 20px;
+	text-align: center;
+	font-family: 'Glegoo', serif;
+	font-size: 10px;
+	text-decoration: none;
+	background: #000;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: none;
+	cursor: pointer;
+}
+
+#student_modal a.st_csv {
+	width: 65px !important;
+}
+
+#student_modal #edit_form {
+	display: none;
+	width: 300px;
+	margin: 0 auto;
+	font-family: "Arial";
+	font-size: 14px;
+}
+
+#student_modal #edit_form h3 {
+	font-family: 'Glegoo', serif;
+}
+
+#student_modal #edit_form .form_group {
+	margin: 3px 0;
+}
+
+#student_modal #edit_form label {
+	width: 120px;
+	display: inline-block;
+}
+
+#ui-datepicker-div {
+	z-index: 9999 !important;
+}
+
+/*************************************************************************
+	Add / Edit Form Styles
+*************************************************************************/
+
+#student_form_wrapper {
+	width: 600px;
+	min-height: 265px;
+	padding: 20px;
+	overflow-y: auto;
+	display: none;
+}
+
+#student_form_wrapper h3 {
+	font-family: 'Glegoo', serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+#student_form_wrapper form {
+	display: block;
+	height: 215px;
+	width: 300px;
+}
+
+#student_form_wrapper form label {
+	display: inline-block;
+	width: 105px;
+	font-family: 'Glegoo', serif;
+	font-size: 14px;
+}
+
+#student_form_wrapper .form_group {
+	margin: 3px 0;
+}
+
+#student_form_wrapper #available_dorms {
+	display: none;
+	width: 640px;
+	height: 120px;
+	
+}
+
+#student_form_wrapper #available_dorms ul {
+	margin: 20px 0;
+	padding: 0 20px;
+	width: 94%;
+	height: 87px;
+}
+
+#student_form_wrapper .dorm_select {
+	width: 80px;
+	height: 40px;
+	margin: 3px 10px;
+	float:left;
+	color: #ffffff;
+	list-style: none;
+	background: red;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	font-size: 30px;
+	list-style: none;
+	padding: 20px 0;
+	text-align: center;
+	cursor: pointer;
+}
+
 #student_form_wrapper .dorm_select.active {
-	border: 1px solid #000;
-	background: transparent !important;
+	background: #2F4F4F !important;
 }
 
 #student_form_wrapper .dorm_select.active.select {
@@ -29,11 +436,18 @@
 	Unit Styles
 ********/
 
+#avialable_units {
+	display: none;
+	float: left;
+	width: 600px;
+}
+
 #avialable_units ul {
 	padding: 0;
 	margin: 0;
 	display: block;
 	float: left;
+	width: 100%;
 }
 
 #avialable_units ul li {
@@ -43,20 +457,36 @@
 }
 
 .unit {
-	height: 100px;
-	width: 125px;
+	height: 97px;
+	width: 122px;
 	float: left;
-	border: 1px solid #000;
+	padding: 3px;
+	background: #808080;
 }
 
 .unit.not_aval {
-	background: red;
+	opacity: 0.8;
+}
+
+.unit.not_aval:before {
+	content: 'Not Available';
+	font-size: 24px;
+	font-family: 'Glegoo', serif;
+	font-weight: bolder;
+	line-height: 40px;
+	text-align: center;
+	width: 122px;
+	height: 97px;
+	padding: 3px;
+	position: absolute;
+	z-index: 100;
+	opacity: 1;
+	background: #ffffff;
 }
 
 .unit .rooms_wrapper {
 	width: 100%;
 	height: 75px;
-	border: 1px solid #000;
 	clear: both;
 }
 
@@ -75,8 +505,14 @@
 .unit .rooms_wrapper .rooms_left .room,
 .unit .rooms_wrapper .rooms_right .room {
 	width: 100%;
-	height: 36px;
-	border: 1px solid #000;
+	height: 32px;
+	line-height: 34px;
+	margin: 3px 0;
+	text-align: center;
+	font-family: 'Glegoo', serif;
+	font-size: 12px;
+	background: #cdcdcd;
+	cursor: pointer;
 }
 
 .unit .rooms_wrapper .room.room_not_aval {
@@ -84,7 +520,7 @@
 }
 
 .unit .rooms_wrapper .room.selected {
-	background: #ccc;
+	background: #2F4F4F;
 }
 
 .unit .unit_access {
@@ -94,8 +530,13 @@
 
 .unit .unit_access .common,
 .unit .unit_access .kitchen {
-	width: 48%;
+	width: 41%;
 	height: 92%;
 	float: left;
-	border: 1px solid #000;
+	font-size: 12px;
+	line-height: 22px;
+	margin: 0 5px;
+	font-family: 'Glegoo', serif;
+	text-align: center;
+	background: #cdcdcd;
 }

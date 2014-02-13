@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Student class
+ *
+ * Creates a student obect when user enters
+ * a new student into the system
+ *
+ * @package    University Dorms
+ * @subpackage Student
+ * @author     Schmar James <loyd.slj@gmail.com>
+ */
 class Student {
 
 	//property
@@ -13,8 +23,11 @@ class Student {
 	public $unit_id;
 	public $room_num;
 	
-	
-	// __construct()
+	/**
+ 	 * Constructor
+ 	 *
+ 	 * @access	public
+ 	 */
 	public function __construct($data) {
 		$this->st_id = $data['st_id'];
 		$this->name = $data['name'];
@@ -27,7 +40,13 @@ class Student {
 		$this->room_num = $data['room_num'];
 	}
 	
-	// execute()
+	/**
+ 	 * save
+ 	 *
+ 	 * saves new student in the database
+ 	 * 
+ 	 * @return int
+ 	 */
 	public function save() {
 		$db = new DB();
 		$db->query('insert into student (st_id, name, address, gender, dob, phone_num, dorm_build_num, unit_id, room_num) value(:st_id, :name, :address, :gender, :dob, :phone, :dorm_num, :unit_id, :room_num)');

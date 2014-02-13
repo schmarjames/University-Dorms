@@ -6,14 +6,18 @@ var submission_form = (function() {
 		dorm_fields = $("#student_form_wrapper .dorm_select"),
 		first_sec_finish = false, 
 		form_data = {},
-		dorm_info, generate_dorm_select, generate_unit_select, check_first_sec, chosen_room, highlight_room, submit, initModule;
+		dormitory_data,
+		dorm_info, generate_dorm_select, generate_unit_select, check_first_sec, chosen_room, submit, initModule;
+	
+	// ************************************************
+	// DOM Manipulation Functions
+	// ************************************************
 	
 	// Generate Dorm Select Funcion
 	generate_dorm_select = function(data) {
 		var dorm_list = '<ul class="second_sec">',
 			dorm_active = 'active';
 		$.each(data, function(key, value) {
-			console.log(value.dorm_id);
 			if(value.capacity_amount == value.dorm_max_capacity) {
 				dorm_active = "";
 				key = "";
@@ -21,7 +25,7 @@ var submission_form = (function() {
 			dorm_list = dorm_list+ '<li class="dorm_select ' + dorm_active + '" data-dorm-num="'+value.dorm_id+'">'+value.dorm_id+'</li>';
 		});	
 		dorm_list + '</ul>';
-		$("#available_dorms").html(dorm_list);
+		$("#available_dorms").prepend(dorm_list);
 	};
 	
 	// Units Generate Event Function
@@ -31,7 +35,7 @@ var submission_form = (function() {
 			unit_list = '<ul class="third_sec">',
 			u_row_count = 0,
 			chosen_gender = $("#student_form_wrapper form input[name=gender]:checked").val();
-		
+
 		$.each(data, function(key, value) {
 			
 			if(selected_dorm == value.dorm_id) {
@@ -51,7 +55,7 @@ var submission_form = (function() {
 					}
 					unit = 	'<li>' +
 							'<h2>'+unit+'</h2>' +
-							'<div class="unit '+not_aval+'" data-floor-num="'+u_data.floor_num+'" data-unit-num="'+u_data.unit_id+'">' +
+							'<div class="unit '+not_aval+'" data-dorm-num="'+selected_dorm+'" data-floor-num="'+u_data.floor_num+'" data-unit-num="'+u_data.unit_id+'">' +
 								'<div class="rooms_wrapper">' +
 									'<div class="rooms_left">';
 					
@@ -85,7 +89,7 @@ var submission_form = (function() {
 					}
 				});
 				unit_list + '</ul>';
-				$("#avialable_units").html(unit_list);
+				$("#avialable_units").prepend(unit_list);
 				
 			}
 				
@@ -100,15 +104,40 @@ var submission_form = (function() {
 				return $.trim(this.value) === "";
 			});
 			if(!empty_fields.length) {
-				$("#student_form_wrapper .second_sec").css("display", "block");
+				$(".next_dorms").attr("disabled", false);
 			} else {
-				$("#student_form_wrapper .second_sec").css("display", "none");
-				$("#student_form_wrapper form input[type=submit]").attr("disabled", true);
-				$("#avialable_units").html("");
+				$(".next_dorms").attr("disabled", true);
 			}
 		});
 	};
 	
+	// ************************************************
+	// Event Handler Functions
+	// ************************************************
+	
+	// displays the dormitory form
+	show_dorm_form = function(e) {
+		$("#student_form_wrapper #student_main_info").fadeOut(250, function(){
+			$("#student_form_wrapper #available_dorms").css("display", "block");
+			$(".next_units").attr("disabled", true);
+		});
+		e.preventDefault();
+	};
+	
+	// displays the unit form for chosen dormitory
+	show_units_form = function(e) {
+		var selected_dorm = $("#student_form_wrapper #available_dorms ul li.dorm_select.select");
+		$("#student_form_wrapper #available_dorms").fadeOut(250, function(){
+			$(".next_units").attr("disabled", false);
+			$("#student_form_wrapper #avialable_units").css("display", "block");
+			$("#student_form_wrapper form input[type=submit]").attr("disabled", true);
+			form_data.dorm_num = selected_dorm.data('dorm-num');
+			generate_unit_select(selected_dorm, dormitory_data);
+		});
+		e.preventDefault();
+	};
+	
+	// highlights selected room
 	chosen_room = function() {
 		if(!$(this).hasClass('room_not_aval') && !$(this).closest('.unit').hasClass('not_aval')) {
 			form_data.unit_num = $(this).closest(".unit").data("unit-num");
@@ -119,11 +148,6 @@ var submission_form = (function() {
 			$("#student_form_wrapper form input[type=submit]").attr("disabled", false);
 		}
 	};	
-	
-	highlight_room = function() {
-		//$(this).addClass('selected');
-		console.log("room clicked");
-	};
 	
 	// Submit Event Function
 	submit = function(e) {
@@ -139,7 +163,7 @@ var submission_form = (function() {
 		form_data['dob'] = $("#student_form_wrapper form input[name=dob]").val();
 		form_data['phone_number'] = $("#student_form_wrapper form input[name=phone_number]").val();
 		
-		//process form data
+		//process form data and store it in the database
 	  	$.ajax({
 		  	type		: 'post',
 		  	url			: '../application/process.php',
@@ -153,11 +177,24 @@ var submission_form = (function() {
 			  	console.log(result);
 			  	
 			  	$.each(result, function(i, element) {
-				  	$('<h3></h3>').html(i).appendTo($("#form_results"));
+			  		if (i != "success") {
+				  		$("#student_form_wrapper form #student_main_info").fadeIn(100);
+				  		$("#student_form_wrapper form #available_dorms").fadeOut(100);
+				  		$("#student_form_wrapper form #available_dorms ul").find("li.select").removeClass("select");
+				  		$("#student_form_wrapper form #available_dorms .next_units").attr("disabled", true);
+				  		$("#student_form_wrapper form #avialable_units").fadeOut(100);
+				  		$("#student_form_wrapper form #avialable_units ul").find("li .unit rooms_wrapper .selected").removeClass("selected");
+				  		$("#student_form_wrapper form input[type=submit]").attr("disabled", true);
+			  		} else {
+				  		$('<h3></h3>').html(i).appendTo($("#form_results"));
 				  	
-				  	$.each(element, function(j, sub) {
-					  	$('<p></p>').addClass('error').html(sub).appendTo("#form_results");
-				  	});
+					  	$.each(element, function(j, sub) {
+						  	$('<p></p>').addClass('error').html(sub).appendTo("#form_results");
+					  	});
+					  	$("#student_form_wrapper form").fadeOut(100);
+					  	setTimeout(function() { $("#student_form_wrapper form")[0].reset(); location.reload();}, 1000);
+			  		}
+				  	
 			  	});
 		  	}
 	  	});
@@ -167,6 +204,9 @@ var submission_form = (function() {
 	
 	initModule = function(dorm_form_info) {
 		
+		dormitory_data = dorm_form_info;
+		
+		// initialize date picker plugin
 		$('#date').datepicker({
         	dateFormat: 'yy-mm-dd',
 			changeMonth: true,
@@ -176,17 +216,19 @@ var submission_form = (function() {
             maxDate: new Date
         });
         
-		generate_dorm_select(dorm_form_info);
+		generate_dorm_select(dormitory_data);
+		
+		// Initialize Events Handlers
 		student_fields.keyup(check_first_sec);
+		$(".next_dorms").click(show_dorm_form);
+		$(".next_units").click(show_units_form);
 		
 		$("#available_dorms ul li.dorm_select").bind("click", function() {
 			var selected = $(this);
 			
 			if (!$(this).hasClass('select') && $(this).hasClass('active')) {
 				selected.addClass('select').siblings().removeClass('select');
-				$("#student_form_wrapper form input[type=submit]").attr("disabled", true);
-				form_data.dorm_num = selected.data('dorm-num');
-				generate_unit_select(selected, dorm_form_info);
+				$(".next_units").attr("disabled", false);
 			}
 		});
 		
